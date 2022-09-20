@@ -49,6 +49,7 @@ var (
 	durationImport     = "google.golang.org/protobuf/types/known/durationpb"
 	wktImport          = "google.golang.org/protobuf/types/known/wrapperspb"
 	fmImport           = "google.golang.org/genproto/protobuf/field_mask"
+	protoReflectImport = "google.golang.org/protobuf/reflect/protoreflect"
 	stdFmtImport       = "fmt"
 	stdCtxImport       = "context"
 	stdStringsImport   = "strings"
@@ -403,6 +404,12 @@ func (b *ORMBuilder) generateConvertFunctions(g *protogen.GeneratedFile, message
 	g.P(`err = posthook.AfterToPB(ctx, &to)`)
 	g.P(`}`)
 	g.P(`return to, err`)
+	g.P(`}`)
+
+	g.P(`// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream`)
+	g.P(`func (m *`, typeName, `ORM) ToPBWrapper (ctx context.Context) (`, generateImport("ProtoMessage", protoReflectImport, g), `, error) {`)
+	g.P(`pb, err := m.ToPB(ctx)`)
+	g.P(`return &pb, err`)
 	g.P(`}`)
 }
 
