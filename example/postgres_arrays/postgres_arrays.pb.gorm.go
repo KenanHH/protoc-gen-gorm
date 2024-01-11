@@ -5,14 +5,9 @@ import (
 	fmt "fmt"
 	errors "github.com/KenanHH/protoc-gen-gorm/errors"
 	gateway "github.com/infobloxopen/atlas-app-toolkit/gateway"
-<<<<<<< HEAD
-	gorm1 "github.com/infobloxopen/atlas-app-toolkit/gorm"
-	gorm "github.com/jinzhu/gorm"
-=======
-	errors "github.com/infobloxopen/protoc-gen-gorm/errors"
->>>>>>> upstream/main
 	pq "github.com/lib/pq"
 	field_mask "google.golang.org/genproto/protobuf/field_mask"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	gorm "gorm.io/gorm"
 )
 
@@ -96,6 +91,12 @@ func (m *ExampleORM) ToPB(ctx context.Context) (Example, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *ExampleORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions

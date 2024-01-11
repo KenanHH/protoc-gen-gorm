@@ -8,12 +8,8 @@ import (
 	gateway "github.com/infobloxopen/atlas-app-toolkit/gateway"
 	gorm1 "github.com/infobloxopen/atlas-app-toolkit/gorm"
 	resource "github.com/infobloxopen/atlas-app-toolkit/gorm/resource"
-<<<<<<< HEAD
-	gorm "github.com/jinzhu/gorm"
-=======
-	errors "github.com/infobloxopen/protoc-gen-gorm/errors"
->>>>>>> upstream/main
 	field_mask "google.golang.org/genproto/protobuf/field_mask"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	gorm "gorm.io/gorm"
 	strings "strings"
@@ -291,6 +287,12 @@ func (m *UserORM) ToPB(ctx context.Context) (User, error) {
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *UserORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type User the arg will be the target, the caller the one being converted from
 
@@ -402,6 +404,12 @@ func (m *EmailORM) ToPB(ctx context.Context) (Email, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *EmailORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -520,6 +528,12 @@ func (m *AddressORM) ToPB(ctx context.Context) (Address, error) {
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *AddressORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type Address the arg will be the target, the caller the one being converted from
 
@@ -619,6 +633,12 @@ func (m *LanguageORM) ToPB(ctx context.Context) (Language, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *LanguageORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -736,6 +756,12 @@ func (m *CreditCardORM) ToPB(ctx context.Context) (CreditCard, error) {
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *CreditCardORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type CreditCard the arg will be the target, the caller the one being converted from
 
@@ -818,6 +844,12 @@ func (m *TaskORM) ToPB(ctx context.Context) (Task, error) {
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TaskORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type Task the arg will be the target, the caller the one being converted from
 
@@ -886,6 +918,12 @@ func (m *DepartmentORM) ToPB(ctx context.Context) (Department, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *DepartmentORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions

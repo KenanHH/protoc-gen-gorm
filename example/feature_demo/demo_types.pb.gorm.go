@@ -9,17 +9,10 @@ import (
 	auth "github.com/infobloxopen/atlas-app-toolkit/auth"
 	gateway "github.com/infobloxopen/atlas-app-toolkit/gateway"
 	gorm1 "github.com/infobloxopen/atlas-app-toolkit/gorm"
-<<<<<<< HEAD
-	gorm "github.com/jinzhu/gorm"
-	postgres "github.com/jinzhu/gorm/dialects/postgres"
-=======
-	errors "github.com/infobloxopen/protoc-gen-gorm/errors"
-	user "github.com/infobloxopen/protoc-gen-gorm/example/user"
-	types "github.com/infobloxopen/protoc-gen-gorm/types"
->>>>>>> upstream/main
 	pq "github.com/lib/pq"
 	go_uuid "github.com/satori/go.uuid"
 	field_mask "google.golang.org/genproto/protobuf/field_mask"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	durationpb "google.golang.org/protobuf/types/known/durationpb"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -155,6 +148,12 @@ func (m *TestTypesORM) ToPB(ctx context.Context) (TestTypes, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TestTypesORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -351,6 +350,12 @@ func (m *TypeWithIDORM) ToPB(ctx context.Context) (TypeWithID, error) {
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TypeWithIDORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type TypeWithID the arg will be the target, the caller the one being converted from
 
@@ -426,6 +431,12 @@ func (m *MultiaccountTypeWithIDORM) ToPB(ctx context.Context) (MultiaccountTypeW
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *MultiaccountTypeWithIDORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type MultiaccountTypeWithID the arg will be the target, the caller the one being converted from
 
@@ -496,6 +507,12 @@ func (m *MultiaccountTypeWithoutIDORM) ToPB(ctx context.Context) (MultiaccountTy
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *MultiaccountTypeWithoutIDORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -587,6 +604,12 @@ func (m *PrimaryUUIDTypeORM) ToPB(ctx context.Context) (PrimaryUUIDType, error) 
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *PrimaryUUIDTypeORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type PrimaryUUIDType the arg will be the target, the caller the one being converted from
 
@@ -668,6 +691,12 @@ func (m *PrimaryStringTypeORM) ToPB(ctx context.Context) (PrimaryStringType, err
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *PrimaryStringTypeORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type PrimaryStringType the arg will be the target, the caller the one being converted from
 
@@ -747,6 +776,12 @@ func (m *TestTagORM) ToPB(ctx context.Context) (TestTag, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TestTagORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -838,6 +873,12 @@ func (m *TestAssocHandlerDefaultORM) ToPB(ctx context.Context) (TestAssocHandler
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TestAssocHandlerDefaultORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type TestAssocHandlerDefault the arg will be the target, the caller the one being converted from
 
@@ -925,6 +966,12 @@ func (m *TestAssocHandlerReplaceORM) ToPB(ctx context.Context) (TestAssocHandler
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TestAssocHandlerReplaceORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -1016,6 +1063,12 @@ func (m *TestAssocHandlerClearORM) ToPB(ctx context.Context) (TestAssocHandlerCl
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TestAssocHandlerClearORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type TestAssocHandlerClear the arg will be the target, the caller the one being converted from
 
@@ -1105,6 +1158,12 @@ func (m *TestAssocHandlerAppendORM) ToPB(ctx context.Context) (TestAssocHandlerA
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TestAssocHandlerAppendORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type TestAssocHandlerAppend the arg will be the target, the caller the one being converted from
 
@@ -1174,6 +1233,12 @@ func (m *TestTagAssociationORM) ToPB(ctx context.Context) (TestTagAssociation, e
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *TestTagAssociationORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -1253,6 +1318,12 @@ func (m *PrimaryIncludedORM) ToPB(ctx context.Context) (PrimaryIncluded, error) 
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *PrimaryIncludedORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions

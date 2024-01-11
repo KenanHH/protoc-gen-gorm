@@ -8,13 +8,9 @@ import (
 	gateway "github.com/infobloxopen/atlas-app-toolkit/gateway"
 	gorm1 "github.com/infobloxopen/atlas-app-toolkit/gorm"
 	query "github.com/infobloxopen/atlas-app-toolkit/query"
-<<<<<<< HEAD
-	gorm "github.com/jinzhu/gorm"
-=======
-	errors "github.com/infobloxopen/protoc-gen-gorm/errors"
->>>>>>> upstream/main
 	trace "go.opencensus.io/trace"
 	field_mask "google.golang.org/genproto/protobuf/field_mask"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	gorm "gorm.io/gorm"
 )
@@ -66,6 +62,12 @@ func (m *IntPointORM) ToPB(ctx context.Context) (IntPoint, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *IntPointORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
@@ -134,6 +136,12 @@ func (m *SomethingORM) ToPB(ctx context.Context) (Something, error) {
 	return to, err
 }
 
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *SomethingORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
+}
+
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
 // of type Something the arg will be the target, the caller the one being converted from
 
@@ -198,6 +206,12 @@ func (m *CircleORM) ToPB(ctx context.Context) (Circle, error) {
 		err = posthook.AfterToPB(ctx, &to)
 	}
 	return to, err
+}
+
+// ToPBWrapper wraps ToPB function and uses proto.Message return value for further interface usage down the stream
+func (m *CircleORM) ToPBWrapper(ctx context.Context) (protoreflect.ProtoMessage, error) {
+	pb, err := m.ToPB(ctx)
+	return &pb, err
 }
 
 // The following are interfaces you can implement for special behavior during ORM/PB conversions
