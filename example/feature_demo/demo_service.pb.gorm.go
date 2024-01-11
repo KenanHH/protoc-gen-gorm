@@ -8,10 +8,15 @@ import (
 	gateway "github.com/infobloxopen/atlas-app-toolkit/gateway"
 	gorm1 "github.com/infobloxopen/atlas-app-toolkit/gorm"
 	query "github.com/infobloxopen/atlas-app-toolkit/query"
+<<<<<<< HEAD
 	gorm "github.com/jinzhu/gorm"
+=======
+	errors "github.com/infobloxopen/protoc-gen-gorm/errors"
+>>>>>>> upstream/main
 	trace "go.opencensus.io/trace"
 	field_mask "google.golang.org/genproto/protobuf/field_mask"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	gorm "gorm.io/gorm"
 )
 
 type IntPointORM struct {
@@ -232,7 +237,7 @@ func DefaultCreateIntPoint(ctx context.Context, in *IntPoint, db *gorm.DB) (*Int
 			return nil, err
 		}
 	}
-	if err = db.Create(&ormObj).Error; err != nil {
+	if err = db.Omit().Create(&ormObj).Error; err != nil {
 		return nil, err
 	}
 	if hook, ok := interface{}(&ormObj).(IntPointORMWithAfterCreate_); ok {
@@ -391,7 +396,7 @@ func DefaultStrictUpdateIntPoint(ctx context.Context, in *IntPoint, db *gorm.DB)
 			return nil, err
 		}
 	}
-	if err = db.Save(&ormObj).Error; err != nil {
+	if err = db.Omit().Save(&ormObj).Error; err != nil {
 		return nil, err
 	}
 	if hook, ok := interface{}(&ormObj).(IntPointORMWithAfterStrictUpdateSave); ok {
@@ -588,7 +593,7 @@ func DefaultCreateSomething(ctx context.Context, in *Something, db *gorm.DB) (*S
 			return nil, err
 		}
 	}
-	if err = db.Create(&ormObj).Error; err != nil {
+	if err = db.Omit().Create(&ormObj).Error; err != nil {
 		return nil, err
 	}
 	if hook, ok := interface{}(&ormObj).(SomethingORMWithAfterCreate_); ok {
@@ -638,10 +643,6 @@ func DefaultListSomething(ctx context.Context, db *gorm.DB) ([]*Something, error
 		if db, err = hook.BeforeListApplyQuery(ctx, db); err != nil {
 			return nil, err
 		}
-	}
-	db, err = gorm1.ApplyCollectionOperators(ctx, db, &SomethingORM{}, &Something{}, nil, nil, nil, nil)
-	if err != nil {
-		return nil, err
 	}
 	if hook, ok := interface{}(&ormObj).(SomethingORMWithBeforeListFind); ok {
 		if db, err = hook.BeforeListFind(ctx, db); err != nil {
@@ -693,7 +694,7 @@ func DefaultCreateCircle(ctx context.Context, in *Circle, db *gorm.DB) (*Circle,
 			return nil, err
 		}
 	}
-	if err = db.Create(&ormObj).Error; err != nil {
+	if err = db.Omit().Create(&ormObj).Error; err != nil {
 		return nil, err
 	}
 	if hook, ok := interface{}(&ormObj).(CircleORMWithAfterCreate_); ok {
@@ -743,10 +744,6 @@ func DefaultListCircle(ctx context.Context, db *gorm.DB) ([]*Circle, error) {
 		if db, err = hook.BeforeListApplyQuery(ctx, db); err != nil {
 			return nil, err
 		}
-	}
-	db, err = gorm1.ApplyCollectionOperators(ctx, db, &CircleORM{}, &Circle{}, nil, nil, nil, nil)
-	if err != nil {
-		return nil, err
 	}
 	if hook, ok := interface{}(&ormObj).(CircleORMWithBeforeListFind); ok {
 		if db, err = hook.BeforeListFind(ctx, db); err != nil {
